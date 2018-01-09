@@ -26,11 +26,11 @@ public class CacheHandler {
 
     private static final String TAG = "CacheHandler";
 
-    public void saveMovies(Context context, ArrayList<Movie> hiddenFormulas) {
+    public void saveMovies(Context context, ArrayList<Movie> movie) {
         try {
             FileOutputStream fileOutputStream = context.openFileOutput("movies.txt", Context.MODE_PRIVATE);
             ObjectOutputStream out = new ObjectOutputStream(fileOutputStream);
-            out.writeObject(hiddenFormulas);
+            out.writeObject(movie);
             out.close();
             fileOutputStream.close();
 
