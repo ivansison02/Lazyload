@@ -71,7 +71,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface, Mo
     @Override
     public void onDataFetchAll(ArrayList list) {
         mAdapter = new MainAdapter(mController, list);
-        //mAdapter.addItem(movie);
         mRecycler.setAdapter(mAdapter);
     }
 

@@ -28,8 +28,8 @@ public class MovieController {
         this.mApp = mApp;
         this.mInterface = mInterface;
 
-        mModel = new MovieModel(this, mCache);
         mCache = new CacheHandler();
+        mModel = new MovieModel(this, mCache);
 
         try {
             requestData();
