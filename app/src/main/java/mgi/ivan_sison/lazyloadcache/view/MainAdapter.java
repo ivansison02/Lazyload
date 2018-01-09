@@ -28,9 +28,6 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
     private static final String TAG = "MainAdapter";
 
-    private final int VIEW_TYPE_ITEM = 0;
-    private final int VIEW_TYPE_LOADING = 1;
-
     private ArrayList items = new ArrayList();
 
     private MainController mController;
@@ -88,20 +85,6 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
             textItem = (TextView) view.findViewById(R.id.movie_name);
             textDesc = (TextView) view.findViewById(R.id.movie_desc);
             image = (ImageView) view.findViewById(R.id.movie_image);
-        }
-    }
-
-    public class LoadingHolder extends RecyclerView.ViewHolder {
-
-        private ProgressBar progressBar;
-
-        private View view;
-
-        public LoadingHolder(View view) {
-            super(view);
-            this.view = view;
-
-            progressBar = (ProgressBar) view.findViewById(R.id.progress_bar);
         }
     }
 }

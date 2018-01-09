@@ -42,11 +42,9 @@ public class MovieController {
 
     public void requestData() throws IOException, ClassNotFoundException {
         if (mModel.hasCache(mApp)) {
-            Log.e(TAG, "Getting cached data");
             mModel.setData(mModel.getCached(mApp));
         }
         else {
-            Log.e(TAG, "Requesting data");
             mModel.setData();
             cacheItems();
         }
