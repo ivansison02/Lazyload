@@ -13,9 +13,10 @@ import java.util.ArrayList;
 import mgi.ivan_sison.lazyloadcache.R;
 import mgi.ivan_sison.lazyloadcache.controller.movie.MovieInterface;
 import mgi.ivan_sison.lazyloadcache.controller.view.MainController;
+import mgi.ivan_sison.lazyloadcache.controller.view.MainInterface;
 import mgi.ivan_sison.lazyloadcache.model.Movie;
 
-public class MainActivity extends AppCompatActivity implements MovieInterface {
+public class MainActivity extends AppCompatActivity implements MainInterface, MovieInterface {
 
     private static final String TAG = "MainActivity";
     private MainController mController;
@@ -25,14 +26,13 @@ public class MainActivity extends AppCompatActivity implements MovieInterface {
     private MainAdapter mAdapter;
 
     private boolean notified = false;
-    private boolean isLoading = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mController = new MainController(this, this);
+        mController = new MainController(this, this, this);
 
         initObj();
 
@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity implements MovieInterface {
     private void initObj() {
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
 
-
         mRecycler = (RecyclerView) findViewById(R.id.main_recycler);
         mRecycler.setLayoutManager(layoutManager);
         mRecycler.setOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -51,15 +50,7 @@ public class MainActivity extends AppCompatActivity implements MovieInterface {
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
 
-                int totalItemCount = layoutManager.getItemCount();
-                int lastVisibleItem = layoutManager.findLastVisibleItemPosition();
-                int visibleThreshold = 1;
-
-                if (!isLoading && totalItemCount <= (lastVisibleItem + visibleThreshold)) {
-                    isLoading = true;
-                    mProgressBar.setVisibility(View.VISIBLE);
-                    mController.getMoviesAddPage();
-                }
+                mController.onScrollView(layoutManager);
             }
         });
 
@@ -94,18 +85,26 @@ public class MainActivity extends AppCompatActivity implements MovieInterface {
 
     @Override
     public void onDataFetching() {
-        isLoading = true;
-        mProgressBar.setVisibility(View.VISIBLE);
+
     }
 
     @Override
     public void onDataFinishedFetching() {
-        isLoading = false;
-        mProgressBar.setVisibility(View.INVISIBLE);
+
     }
 
     @Override
     public void onFailure() {
         Toast.makeText(this, "No data found!", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onShowProgress() {
+        mProgressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onFinishedProgress() {
+        mProgressBar.setVisibility(View.INVISIBLE);
     }
 }
